@@ -12,4 +12,4 @@ WORKDIR /files_storage
 COPY ./server.js .
 COPY --from=build-react /files_storage/test-app/build ./test-app/build
 RUN npm install pm2 -g
-CMD ["pm2-runtime", "server.js"]
+CMD ["pm2-runtime", "start", "pm2_ecosystem.json"]
