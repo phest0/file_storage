@@ -13,44 +13,26 @@ ARG APP_GROUP=appgroup
 RUN addgroup -S ${APP_GROUP} && adduser -S ${APP_USER} -G ${APP_GROUP}
 
 # Répertoire de travail
-WORKDIR /files_storage/test-app
+WORKDIR /files_storage
 
 # Changement utilisateur
 USER ${APP_USER}:${APP_GROUP}
 
+RUN mkdir ./test-app
+
 # Copie des fichiers de package.json et installation des dépendances
-COPY --chown=${APP_USER}:${APP_GROUP} ./test-app/package*.json ./
+COPY --chown=${APP_USER}:${APP_GROUP} ./test-app/package*.json ./test-app
 
 RUN cd ./test-app && npm install
 
 # Copie des fichiers de l'application React et construction
-COPY --chown=${APP_USER}:${APP_GROUP} ./test-app .
+COPY --chown=${APP_USER}:${APP_GROUP} ./test-app ./test-app
 
 RUN cd ./test-app && npm run build
 
 # Nettoyage des fichiers temporaires
 RUN cd ./test-app && npm cache clean --force && \
     rm -rf /tmp/*
-
-# Étape 2 : Construire le serveur Node.js avec PM2
-FROM node:20.14.0-alpine as build
-
-# Labels
-LABEL version=v0.1
-LABEL description="file_storage_node_server"
-
-# Arguments
-ARG APP_USER=appuser
-ARG APP_GROUP=appgroup
-
-# Création utilisateur
-RUN addgroup -S ${APP_GROUP} && adduser -S ${APP_USER} -G ${APP_GROUP}
-
-# Répertoire de travail
-WORKDIR /files_storage
-
-# Changement utilisateur
-USER ${APP_USER}:${APP_GROUP}
 
 # Copie des fichiers de package.json, server.js et configuration PM2
 COPY --chown=${APP_USER}:${APP_GROUP} ./package*.json ./
@@ -63,9 +45,6 @@ RUN npm install
 # Nettoyage des fichiers temporaires
 RUN npm cache clean --force && \
     rm -rf /tmp/*
-
-# Copie des fichiers de l'application React construite
-COPY --from=build-react --chown=${APP_USER}:${APP_GROUP} /files_storage/test-app/dist ./test-app/dist
 
 # Installation de PM2, configuration des logs et exposition du port
 RUN npm install pm2 -g && \
