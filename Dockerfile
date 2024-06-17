@@ -15,21 +15,21 @@ RUN addgroup -S ${APP_GROUP} && adduser -S ${APP_USER} -G ${APP_GROUP}
 # Répertoire de travail
 WORKDIR /files_storage/test-app
 
-RUN chown -R ${APP_USER}:${APP_GROUP} /files_storage
-
 # Changement utilisateur
 USER ${APP_USER}:${APP_GROUP}
 
 # Copie des fichiers de package.json et installation des dépendances
 COPY --chown=${APP_USER}:${APP_GROUP} ./test-app/package*.json ./
-RUN npm install
+
+RUN cd ./test-app && npm install
 
 # Copie des fichiers de l'application React et construction
 COPY --chown=${APP_USER}:${APP_GROUP} ./test-app .
-RUN npm run build
+
+RUN cd ./test-app && npm run build
 
 # Nettoyage des fichiers temporaires
-RUN npm cache clean --force && \
+RUN cd ./test-app && npm cache clean --force && \
     rm -rf /tmp/*
 
 # Étape 2 : Construire le serveur Node.js avec PM2
