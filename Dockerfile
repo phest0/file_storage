@@ -15,10 +15,10 @@ RUN addgroup -S ${APP_GROUP} && adduser -S ${APP_USER} -G ${APP_GROUP}
 # Répertoire de travail
 WORKDIR /files_storage
 
+RUN mkdir -p /files_storage/test-app && chown -R ${APP_USER}:${APP_GROUP} /files_storage/test-app
+
 # Changement utilisateur
 USER ${APP_USER}:${APP_GROUP}
-
-RUN mkdir ./test-app
 
 # Copie des fichiers de package.json et installation des dépendances
 COPY --chown=${APP_USER}:${APP_GROUP} ./test-app/package*.json ./test-app
