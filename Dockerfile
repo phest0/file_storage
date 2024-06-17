@@ -15,6 +15,8 @@ RUN addgroup -S ${APP_GROUP} && adduser -S ${APP_USER} -G ${APP_GROUP}
 # Répertoire de travail
 WORKDIR /files_storage/test-app
 
+RUN chown -R ${APP_USER}:${APP_GROUP} /files_storage
+
 # Changement utilisateur
 USER ${APP_USER}:${APP_GROUP}
 
