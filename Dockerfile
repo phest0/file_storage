@@ -36,7 +36,7 @@ RUN cd ./test-app && npm install && npm run build && npm cache clean --force
 
 COPY --chown=${APP_USER}:${APP_GROUP} ./package.json .
 COPY --chown=${APP_USER}:${APP_GROUP} ./server.js .
-COPY --chown=${APP_USER}:${APP_GROUP} ./ecosystem.config.cjs .
+COPY --chown=${APP_USER}:${APP_GROUP} ./ecosystem.config.js .
 
 # Installation des dépendances Node.js
 RUN npm install && npm cache clean --force
@@ -45,4 +45,4 @@ RUN npm install && npm cache clean --force
 EXPOSE 3200
 
 # Commande de démarrage de PM2
-CMD ["pm2-runtime", "start", "ecosystem.config.cjs"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
