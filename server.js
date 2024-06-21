@@ -1,9 +1,19 @@
 const express = require("express");
 const path = require("path");
+const https = require("https");
+const fs = require("fs");
 
 const app = express();
 
-console.log("__dirname", __dirname);
+// Chargement des certificats SSL/TLS
+const privateKey = fs.readFileSync("/home/userapp/CERTS/privkey.pem", "utf8");
+const certificate = fs.readFileSync(
+  "/home/userapp/CERTS/fullchain.pem",
+  "utf8"
+);
+
+const credentials = { key: privateKey, cert: certificate };
+
 // Servir les fichiers statiques depuis le dossier build
 app.use(express.static(path.join(__dirname, "test-app", "dist")));
 
@@ -12,8 +22,11 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "test-app", "dist", "index.html"));
 });
 
-// Port d'écoute pour le serveur
-const port = process.env.PORT || 3200;
-app.listen(port, () => {
-  console.log(`Serveur Node.js écoutant sur le port ${port}`);
+// Créer un serveur HTTPS
+const httpsServer = https.createServer(credentials, app);
+
+// Port d'écoute pour le serveur HTTPS
+const port = process.env.PORT || 80;
+httpsServer.listen(port, () => {
+  console.log(`Serveur Node.js écoutant en HTTPS sur le port ${port}`);
 });

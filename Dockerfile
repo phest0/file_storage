@@ -2,7 +2,7 @@
 FROM node:20.14.0-alpine as build-react
 
 # Labels
-LABEL version=v0.1
+LABEL version=v0.2
 LABEL description="file_storage_react_app"
 
 # Arguments
@@ -42,7 +42,7 @@ COPY --chown=${APP_USER}:${APP_GROUP} ./ecosystem.config.js .
 RUN npm install && npm cache clean --force
 
 # Exposer le port nécessaire
-EXPOSE 3200
+EXPOSE 80
 
 # Commande de démarrage de PM2
 CMD ["pm2-runtime", "start", "ecosystem.config.js"]
