@@ -14,6 +14,8 @@ RUN addgroup -S ${APP_GROUP} && \
 adduser -S ${APP_USER} -G ${APP_GROUP} && \
 mkdir /files_storage && \ 
 chown -R ${APP_USER}:${APP_GROUP} /files_storage && \
+mkdir -p /.pm2/logs && \
+chown -R ${APP_USER}:${APP_GROUP} /.pm2 \
 mkdir -p /home/${APP_USER}/pm2/logs/out && \
 mkdir -p /home/${APP_USER}/pm2/logs/error && \
 chown -R ${APP_USER}:${APP_GROUP} /home/${APP_USER}/pm2 && \
