@@ -43,7 +43,7 @@ COPY --chown=${APP_USER}:${APP_GROUP} ./CERTS/ ./CERTS
 RUN npm install && npm cache clean --force
 
 # Exposer le port nécessaire
-EXPOSE 80
+EXPOSE 443
 
 # Commande de démarrage de PM2
 CMD ["pm2-runtime", "start", "ecosystem.config.js"]
