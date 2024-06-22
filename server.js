@@ -31,7 +31,7 @@ const proxy = httpProxy.createProxyServer();
 
 // Exemple de reverse proxy pour la route /
 app.all("/", function (req, res) {
-  proxy.web(req, res, { target: "https://docker.phesto.fr:80" });
+  proxy.web(req, res, { target: "https://localhost:80" });
 });
 
 // Écouter les requêtes HTTPS sur le port spécifié
