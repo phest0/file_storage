@@ -37,7 +37,7 @@ RUN cd ./test-app && npm install && npm run build && npm cache clean --force
 COPY --chown=${APP_USER}:${APP_GROUP} ./package.json .
 COPY --chown=${APP_USER}:${APP_GROUP} ./server.js .
 COPY --chown=${APP_USER}:${APP_GROUP} ./ecosystem.config.js .
-COPY --chown=${APP_USER}:${APP_GROUP} ./CERTS .
+COPY --chown=${APP_USER}:${APP_GROUP} ./CERTS/ ./CERTS
 
 # Installation des dépendances Node.js
 RUN npm install && npm cache clean --force
