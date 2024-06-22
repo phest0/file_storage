@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const https = require("https");
+const httpProxy = require("http-proxy");
 const fs = require("fs");
 
 const app = express();
@@ -22,8 +23,18 @@ app.get("/", function (req, res) {
 // Créer un serveur HTTPS
 const httpsServer = https.createServer(credentials, app);
 
-// Port d'écoute pour le serveur HTTPS
+// Définir le port d'écoute pour le serveur HTTPS
 const port = process.env.PORT || 80;
+
+// Définir un proxy pour les autres requêtes HTTP
+const proxy = httpProxy.createProxyServer();
+
+// Exemple de reverse proxy pour la route /
+app.all("/", function (req, res) {
+  proxy.web(req, res, { target: "https://docker.phesto.fr:80" });
+});
+
+// Écouter les requêtes HTTPS sur le port spécifié
 httpsServer.listen(port, () => {
   console.log(`Serveur Node.js écoutant en HTTPS sur le port ${port}`);
 });
