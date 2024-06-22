@@ -6,11 +6,8 @@ const fs = require("fs");
 const app = express();
 
 // Chargement des certificats SSL/TLS
-const privateKey = fs.readFileSync("/home/userapp/CERTS/privkey.pem", "utf8");
-const certificate = fs.readFileSync(
-  "/home/userapp/CERTS/fullchain.pem",
-  "utf8"
-);
+const privateKey = fs.readFileSync("./CERTS/privkey.pem", "utf8");
+const certificate = fs.readFileSync("./CERTS/fullchain.pem", "utf8");
 
 const credentials = { key: privateKey, cert: certificate };
 
