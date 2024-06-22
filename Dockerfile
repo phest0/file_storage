@@ -2,7 +2,7 @@
 FROM node:20.14.0-alpine as build-react
 
 # Labels
-LABEL version=v0.2
+LABEL version=v0.3
 LABEL description="file_storage_react_app"
 
 # Arguments
