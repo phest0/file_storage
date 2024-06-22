@@ -24,14 +24,17 @@ app.get("/", function (req, res) {
 const httpsServer = https.createServer(credentials, app);
 
 // Définir le port d'écoute pour le serveur HTTPS
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 443;
 
-// Définir un proxy pour les autres requêtes HTTP
-const proxy = httpProxy.createProxyServer();
+// Définir un proxy pour les autres requêtes HTTP(S)
+const proxy = httpProxy.createProxyServer({
+  secure: true, // Permettre les connexions HTTPS vers le backend
+  changeOrigin: true, // Modifier l'origine des en-têtes de requête pour correspondre à la cible
+});
 
 // Exemple de reverse proxy pour la route /
-app.all("/", function (req, res) {
-  proxy.web(req, res, { target: "https://localhost:80" });
+app.all("*", function (req, res) {
+  proxy.web(req, res, { target: "https://localhost:443" });
 });
 
 // Écouter les requêtes HTTPS sur le port spécifié
