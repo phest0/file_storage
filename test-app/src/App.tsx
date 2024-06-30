@@ -11,7 +11,8 @@ import {
   useRouteLoaderData,
 } from "react-router-dom";
 import { fakeAuthProvider } from "./auth";
-import { Card, CardBody, Avatar } from "@nextui-org/react";
+import "./output.css";
+// import { Card, CardBody } from "@nextui-org/react";
 
 const router = createBrowserRouter([
   {
@@ -58,23 +59,14 @@ export default function App() {
 
 function Layout() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Card>
-        <CardBody>
-          <p>Make beautiful websites regardless of your design experience.</p>
-        </CardBody>
-
-        <AuthStatus />
-      </Card>
-      <div className="flex gap-3 items-center">
-        <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-        <Avatar name="Junior" />
-        <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-        <Avatar name="Jane" />
-        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
-        <Avatar name="Joe" />
+    <div className="flex items-center justify-center min-h-screen text-white h-screen">
+      <div className="bg-blue-600 w-20 h-20 flex items-center justify-center">
+        toto
       </div>
+      <div className="bg-green-400 w-20 h-20 flex items-center justify-center">
+        tata
+      </div>
+      {/* <AuthStatus /> */}
     </div>
   );
 }
@@ -85,7 +77,7 @@ function AuthStatus() {
   const fetcher = useFetcher();
 
   if (!user) {
-    return <p>You are not logged in.</p>;
+    return;
   }
 
   const isLoggingOut = fetcher.formData != null;
