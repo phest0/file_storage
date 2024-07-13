@@ -1,5 +1,3 @@
-import React from "react";
-
 const HomePage = () => {
   const handleLogout = () => {
     // Logique de déconnexion à implémenter ici

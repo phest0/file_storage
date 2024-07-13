@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 
-const LoginPage = () => {
+const LoginPage = ({ handleLogin, setUsername, setPassword }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
@@ -13,7 +19,7 @@ const LoginPage = () => {
         <h2 className="text-white text-2xl font-bold mb-6 text-center">
           Connexion
         </h2>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="mb-4">
             <label className="block text-left text-white mb-2" htmlFor="login">
               Login
@@ -22,6 +28,7 @@ const LoginPage = () => {
               type="text"
               id="login"
               className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-80 focus:outline-none focus:ring-2 focus:ring-customGreen"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="mb-2">
@@ -35,6 +42,7 @@ const LoginPage = () => {
               type={passwordVisible ? "text" : "password"}
               id="password"
               className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-80 focus:outline-none focus:ring-2 focus:ring-customGreen"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mb-6 text-right">
