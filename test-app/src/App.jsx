@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignIn from "./pages/auth/SignIn";
 import HomePage from "./pages/home/HomePage";
+import AuthService from "./services/AuthService";
 
 import "./App.css";
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: "home",
     element: <HomePage />,
+    loader: AuthService.isTokenValid,
   },
 ]);
 

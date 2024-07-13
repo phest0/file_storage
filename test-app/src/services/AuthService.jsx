@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 
 const API_URL = "http://localhost:3000";
 
@@ -95,8 +96,18 @@ class AuthService {
     return null;
   }
 
-  getApi() {
-    return this.api;
+  async isTokenValid({ request }) {
+    try {
+      // const response = await this.api.get("/verify-token");
+      const response = { status: 200 };
+      // throw new Error("token invalid");
+      return response.status === 200;
+    } catch (error) {
+      console.log(error);
+      let params = new URLSearchParams();
+      params.set("from", new URL(request.url).pathname);
+      return redirect("/login");
+    }
   }
 }
 

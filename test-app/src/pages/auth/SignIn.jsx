@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AuthService from "@/api/AuthService";
+import AuthService from "@/services/AuthService";
 import LoginPage from "./LoginPage";
 
 const SignIn = () => {
